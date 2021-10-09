@@ -18,7 +18,7 @@ pub async fn hash() -> [u8;KEY_LEN] {
     //     Ok(None) => String::from(""),
     //     Err(_e) => String::from(""),
     // };
-    let mut to_hash: String = String::from("123");
+    let mut to_hash: String;
     match N_MODE {
         NetworkMode::Global => to_hash = get_public_ip().await.unwrap(),
         NetworkMode::Local => to_hash = get_local_ip().await.unwrap(),
