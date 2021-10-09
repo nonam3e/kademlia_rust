@@ -6,8 +6,8 @@ pub struct Key(pub[u8; KEY_LEN]);
 
 
 impl Key {
-    pub fn new() -> Self {
-        Self(hasher::hash())
+    pub async fn new() -> Self {
+        Self(hasher::hash().await)
     }
 
 }
@@ -25,7 +25,7 @@ impl Node {
             _ => panic!("set NetworkMode"),
         };
         let port: u16 = 12121;
-        let id = Key::new();
+        let id = Key::new().await;
         Self{ip,port,id}
     }
 }

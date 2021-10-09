@@ -27,7 +27,7 @@ pub async fn get_public_ip() -> Option<String>  {
     return None;
 }
 
-pub async fn get_mac() -> Option<String> {
+pub fn get_mac() -> Option<String> {
     match get_mac_address() {
         Ok(Some(ma)) => return Some(ma.to_string()),
         Ok(None) => return None,
