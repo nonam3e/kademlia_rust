@@ -11,3 +11,8 @@ hex-literal = "0.3.3"
 public-ip = "0.2.1"
 tokio = { version = "~1.8", features = ["full"] }
 mac_address = "1.1.2"
+
+[profile.dev]
+debug = true
+opt-level = 0
+
