@@ -3,7 +3,7 @@ use crate::utils::{get_current_time, get_local_ip, get_mac, get_public_ip};
 use super::settings::{N_MODE,KEY_LEN,NetworkMode,ALPHA};
 
 
-pub async fn hash() -> [u8;KEY_LEN] {
+pub async fn hash(port: u16) -> [u8;KEY_LEN] {
     let mut to_hash: String;
     match N_MODE {
         NetworkMode::Global => to_hash = get_public_ip().await.unwrap(),
@@ -11,7 +11,7 @@ pub async fn hash() -> [u8;KEY_LEN] {
         _=> panic!("set NetworkMode"),
     }
 
-    to_hash = format!("{}{}{}", to_hash, get_mac().unwrap(),get_current_time().unwrap());
+    to_hash = format!("{}{}{}{}", to_hash, get_mac().unwrap(),get_current_time().unwrap(),port);
     // println!("{}", to_hash);
     let mut hasher = Sha256::new();
     hasher.update(to_hash);

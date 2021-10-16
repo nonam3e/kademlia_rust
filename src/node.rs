@@ -9,8 +9,8 @@ pub struct Key(pub[u8; KEY_LEN]);
 
 
 impl Key {
-    pub async fn new() -> Self {
-        Self(hasher::hash().await)
+    pub async fn new(port: u16) -> Self {
+        Self(hasher::hash(port).await)
     }
 }
 impl fmt::Display for Key {
@@ -25,14 +25,14 @@ pub struct Node {
 }
 
 impl Node {
-    pub async fn new() -> Self {
+    pub async fn new(port: Option <u16>) -> Self {
         let ip = match N_MODE{
             NetworkMode::Global => utils::get_public_ip().await.unwrap(),
             NetworkMode::Local => utils::get_local_ip().await.unwrap(),
             _ => panic!("set NetworkMode"),
         };
-        let port: u16 = 12121;
-        let id = Key::new().await;
+        let port= port.unwrap_or(12121);
+        let id = Key::new(port).await;
         Self{ip,port,id}
     }
 }
