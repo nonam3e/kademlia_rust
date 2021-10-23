@@ -6,7 +6,7 @@ pub const KEY_LEN: usize = 32;
 const N_BUCKETS: usize = KEY_LEN * 8;
 
 // number entries in a list
-const K_PARAM: usize = 20;
+pub const K_PARAM: usize = 20;
 
 // buffer size used for streaming UDP
 const BUF_SIZE: usize = 4096 * 2;

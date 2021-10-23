@@ -2,6 +2,8 @@ mod node;
 mod hasher;
 mod settings;
 mod utils;
+mod kbucket;
+
 #[tokio::main]
 async fn main() {
     let first_node = node::Node::new(None).await;
