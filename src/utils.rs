@@ -2,13 +2,12 @@ use tokio::net::UdpSocket;
 use std::time::SystemTime;
 use public_ip;
 use mac_address::get_mac_address;
-use crate::node::Key;
 use crate::settings::KEY_LEN;
 use std::fmt;
 use hex;
+use crate::key::Key;
+use sha2::{Sha256, Digest};
 
-
-pub struct Distance(pub [u8; KEY_LEN]);
 
 pub async fn get_local_ip() -> Option<String> {
     let socket = match UdpSocket::bind("0.0.0.0:0").await {
@@ -48,17 +47,13 @@ pub fn get_current_time() -> Option<String> {
     }
 }
 
-impl Distance {
-    pub fn new(a: &Key, b: &Key) -> Distance {
-        let mut res = [0;KEY_LEN];
-        for i in 0..KEY_LEN {
-            res[i] = a.0[i] ^ b.0[i];
-        }
-        Self(res)
+pub async fn hash(to_hash: String) -> [u8;KEY_LEN] {
+    let mut hasher = Sha256::new();
+    hasher.update(to_hash);
+    let hex = hasher.finalize();
+    let mut result = [0;KEY_LEN];
+    for i in 0..KEY_LEN {
+        result[i]=hex[i];
     }
-}
-impl fmt::Display for Distance {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f,"{}",hex::encode(self.0))
-    }
+    result
 }

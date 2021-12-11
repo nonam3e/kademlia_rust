@@ -43,7 +43,7 @@ impl Kbucket
     }
 }
 
-/*
+
 impl fmt::Display for Kbucket
 {
     fn fmt(&self, former :&mut fmt::Formatter <'_>) -> fmt::Result
@@ -61,7 +61,6 @@ impl fmt::Display for Kbucket
             idx += 1;
         }
 
-        return res;
+        res
     }
 }
-*/
